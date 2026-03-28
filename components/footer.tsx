@@ -41,7 +41,7 @@
 //                 <Heart className="w-5 h-5 text-primary-foreground" />
 //               </div>
 //               <span className="font-serif text-xl font-bold">
-//                 SHAPE<span className="text-primary">ethiopia</span>
+//                 SHAPE<span className="text-primary">thiopia</span>
 //               </span>
 //             </Link>
 //             <p className="text-background/70 leading-relaxed">
@@ -216,7 +216,7 @@ export function Footer() {
                 <Heart className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="font-serif text-xl font-bold">
-                SHAPE<span className="text-primary">ethiopia</span>
+                SHAPE<span className="text-primary">thiopia</span>
               </span>
             </Link>
             <p className="text-background/70 leading-relaxed">
