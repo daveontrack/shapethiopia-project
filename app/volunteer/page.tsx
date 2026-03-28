@@ -142,62 +142,145 @@ export default function VolunteerPage() {
     return Object.keys(newErrors).length === 0
   }
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+    
+  //   if (!validateForm()) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Validation Error",
+  //       description: "Please fix the errors in the form before submitting.",
+  //     })
+  //     return
+  //   }
+    
+  //   setIsSubmitting(true)
+    
+  //   try {
+  //     const supabase = createClient()
+  //     const { data: { user } } = await supabase.auth.getUser()
+      
+  //     // Parse name into first and last name
+  //     const nameParts = formData.name.trim().split(" ")
+  //     const firstName = nameParts[0]
+  //     const lastName = nameParts.slice(1).join(" ") || ""
+      
+  //     const { error } = await supabase
+  //       .from("volunteer_applications")
+  //       .insert({
+  //         user_id: user?.id || null,
+  //         first_name: firstName,
+  //         last_name: lastName,
+  //         email: formData.email,
+  //         phone: formData.phone || null,
+  //         interests: formData.interest ? [formData.interest] : null,
+  //         motivation: formData.message || null,
+  //         status: "pending",
+  //       })
+      
+  //     if (error) {
+  //       throw error
+  //     }
+      
+  //     setIsSubmitted(true)
+  //     setFormData({ name: "", email: "", phone: "", interest: "", message: "" })
+  //     setErrors({})
+      
+  //     // Scroll to the success message
+  //     document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
+  //   } catch (error) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Something went wrong",
+  //       description: "Please try again.",
+  //     })
+  //   } finally {
+  //     setIsSubmitting(false)
+  //   }
+  // }
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!validateForm()) {
-      toast({
-        variant: "destructive",
-        title: "Validation Error",
-        description: "Please fix the errors in the form before submitting.",
-      })
-      return
-    }
-    
-    setIsSubmitting(true)
-    
-    try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-      
-      // Parse name into first and last name
-      const nameParts = formData.name.trim().split(" ")
-      const firstName = nameParts[0]
-      const lastName = nameParts.slice(1).join(" ") || ""
-      
-      const { error } = await supabase
-        .from("volunteer_applications")
-        .insert({
-          user_id: user?.id || null,
-          first_name: firstName,
-          last_name: lastName,
-          email: formData.email,
-          phone: formData.phone || null,
-          interests: formData.interest ? [formData.interest] : null,
-          motivation: formData.message || null,
-          status: "pending",
-        })
-      
-      if (error) {
-        throw error
-      }
-      
-      setIsSubmitted(true)
-      setFormData({ name: "", email: "", phone: "", interest: "", message: "" })
-      setErrors({})
-      
-      // Scroll to the success message
-      document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong",
-        description: "Please try again.",
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
+  e.preventDefault()
+
+  // ✅ Validate first
+  if (!validateForm()) {
+    toast({
+      variant: "destructive",
+      title: "Validation Error",
+      description: "Please fix the errors in the form before submitting.",
+    })
+    return
   }
+
+  setIsSubmitting(true)
+
+  try {
+    const supabase = createClient()
+
+    // ✅ SAFE auth (no lock error)
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    const user = session?.user ?? null
+
+    // ✅ Split name
+    const nameParts = formData.name.trim().split(" ")
+    const firstName = nameParts[0]
+    const lastName = nameParts.slice(1).join(" ") || ""
+
+    // ✅ Insert into DB
+    const { error } = await supabase
+      .from("volunteer_applications")
+      .insert({
+        user_id: user?.id || null,
+        first_name: firstName,
+        last_name: lastName,
+        email: formData.email,
+        phone: formData.phone || null,
+
+        // 🔥 IMPORTANT FIX (no array unless DB supports it)
+        interests: formData.interest || null,
+
+        motivation: formData.message || null,
+        status: "pending",
+      })
+
+    if (error) {
+      console.error("Supabase error:", error)
+      throw error
+    }
+
+    // ✅ SUCCESS
+    setIsSubmitted(true)
+
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      interest: "",
+      message: "",
+    })
+
+    setErrors({})
+
+    // Scroll to success message
+    setTimeout(() => {
+      document.getElementById("apply")?.scrollIntoView({ behavior: "smooth" })
+    }, 100)
+
+  } catch (error) {
+    console.error("Submit error:", error)
+
+    toast({
+      variant: "destructive",
+      title: "Submission Failed",
+      description: "Something went wrong. Please try again.",
+    })
+  } finally {
+    setIsSubmitting(false)
+  }
+}
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData({ ...formData, [field]: value })
