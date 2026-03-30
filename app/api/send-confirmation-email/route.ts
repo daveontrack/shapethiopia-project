@@ -16,6 +16,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Resend free/test tier restriction: can only send to verified test email
+    const testEmail = "dawitberiso406@gmail.com"
+    const isTestEmail = email === testEmail
+    
+    if (!isTestEmail) {
+      console.log(`[v0] Resend is in test mode. Skipping email to ${email}. Only test emails (${testEmail}) can receive emails.`)
+      // Don't fail - just skip the email for non-test addresses
+      return NextResponse.json({
+        success: true,
+        message: "Email verification signup recorded. To send to other addresses, verify domain at resend.com/domains",
+        skipped: true,
+        reason: "Resend test mode - domain not verified",
+      })
+    }
+
     const { data, error } = await resend.emails.send({
       from: "onboarding@resend.dev",
       to: email,
