@@ -165,7 +165,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+<<<<<<< HEAD
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowRight } from "lucide-react";
+=======
+import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -188,6 +192,10 @@ const programs = [
 const socialLinks = [
   { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
   { href: "https://twitter.com", icon: Twitter, label: "Twitter" },
+<<<<<<< HEAD
+=======
+  { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
   { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
   { href: "https://youtube.com", icon: Youtube, label: "YouTube" },
 ];
@@ -212,7 +220,11 @@ export function Footer() {
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+<<<<<<< HEAD
                 <ArrowRight className="w-5 h-5 text-primary-foreground" />
+=======
+                <Heart className="w-5 h-5 text-primary-foreground" />
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
               </div>
               <span className="font-serif text-xl font-bold">
                 SHAPE<span className="text-primary">thiopia</span>
@@ -292,7 +304,11 @@ export function Footer() {
                 <li className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-primary shrink-0" />
                   <a href="tel:+251911234567" className="text-background/70 hover:text-primary transition-colors">
+<<<<<<< HEAD
                     +251 911 094273
+=======
+                    +251 911 234 567
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
                   </a>
                 </li>
               </ul>

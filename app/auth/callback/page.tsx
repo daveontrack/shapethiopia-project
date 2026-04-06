@@ -32,6 +32,7 @@ export default function AuthCallbackPage() {
           return
         }
 
+<<<<<<< HEAD
         const params = new URLSearchParams(window.location.search)
         const redirectTo = params.get("redirectTo") || "/"
 
@@ -40,6 +41,13 @@ export default function AuthCallbackPage() {
           description: "Redirecting to your destination...",
         })
         router.replace(redirectTo)
+=======
+        toast({
+          title: "Signed in successfully",
+          description: "Redirecting to your dashboard...",
+        })
+        router.replace("/dashboard")
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
       } catch (error) {
         toast({
           title: "OAuth callback failed",

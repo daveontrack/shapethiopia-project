@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
+<<<<<<< HEAD
 import { Menu, Heart, User, LogOut, LayoutDashboard, ArrowRight } from 'lucide-react'
+=======
+import { Menu, Heart, User, LogOut, LayoutDashboard } from 'lucide-react'
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
 import { Button } from '@/components/ui/button'
 
 const MobileNav = dynamic(
@@ -153,7 +157,11 @@ export function Navigation() {
         {/* Logo */}
         <Link href='/' className='flex items-center gap-2'>
           <div className='w-10 h-10 rounded-full bg-primary flex items-center justify-center'>
+<<<<<<< HEAD
             <ArrowRight className='w-5 h-5 text-primary-foreground' />
+=======
+            <Heart className='w-5 h-5 text-primary-foreground' />
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
           </div>
           <span className='font-bold text-lg'>
             SHAPE<span className='text-primary'>thiopia</span>

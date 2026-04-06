@@ -81,7 +81,11 @@ export function AboutPreview() {
               </div>
             </div>
             <div className="space-y-4 pt-8">
+<<<<<<< HEAD
               <div className="relative h-64 rounded-3xl overflow-hidden">
+=======
+              <div className="relative h-64 rounded-2xl overflow-hidden">
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
                 <img
                   src="/images/clean-water.jpg"
                   alt="Clean water initiative"

@@ -44,11 +44,18 @@ export async function POST(request: NextRequest): Promise<NextResponse<ProfileRe
       )
     }
 
+<<<<<<< HEAD
     // Update or create profile in Supabase
     const { data, error } = await supabase
       .from('profiles')
       .upsert({
         id: user.id,
+=======
+    // Update profile in Supabase
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
         first_name: body.first_name.trim(),
         last_name: body.last_name.trim(),
         phone: body.phone?.trim() || null,
@@ -56,9 +63,14 @@ export async function POST(request: NextRequest): Promise<NextResponse<ProfileRe
         city: body.city?.trim() || null,
         country: body.country?.trim() || null,
         updated_at: new Date().toISOString(),
+<<<<<<< HEAD
       }, {
         onConflict: 'id'
       })
+=======
+      })
+      .eq('id', user.id)
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
       .select()
       .single()
 
@@ -169,12 +181,20 @@ export async function GET(request: NextRequest): Promise<NextResponse<ProfileRes
       )
     }
 
+<<<<<<< HEAD
     // Fetch user profile - handle case where profile doesn't exist yet
+=======
+    // Fetch user profile
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', user.id)
+<<<<<<< HEAD
       .maybeSingle()
+=======
+      .single()
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
 
     if (error) {
       console.error('[v0] Profile fetch error:', error)
@@ -184,6 +204,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ProfileRes
       )
     }
 
+<<<<<<< HEAD
     // If no profile exists, return default profile data
     const profileData = data || {
       id: user.id,
@@ -200,6 +221,12 @@ export async function GET(request: NextRequest): Promise<NextResponse<ProfileRes
       success: true,
       data: {
         ...profileData,
+=======
+    return NextResponse.json({
+      success: true,
+      data: {
+        ...data,
+>>>>>>> 15d4869a3d1f5707ade98ec9a559f125767e76d3
         email: user.email,
       },
     })
